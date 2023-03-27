@@ -8,6 +8,7 @@ async def hello():
     return "Hello"
 @app.post('/')
 async def post(input: InputModel):
+    print("hello")
     return input
 
 if __name__ == '__main__':
