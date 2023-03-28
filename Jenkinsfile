@@ -11,10 +11,16 @@ pipeline {
                 sh 'pip install -r requirements.txt'
             }
         }
-        stage('Deploy') {
+         stage('Docker') {
             steps {
-                sh 'python3 app.py'
+                script {
+                    def dockerImage = docker.build("abdelhamiedamr/jenkins_image")
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
+                        dockerImage.push()
+                    }
+                }
             }
         }
     }
 }
+
